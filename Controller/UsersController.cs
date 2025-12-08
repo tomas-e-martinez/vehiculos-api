@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using vehiculos_api.Data;
 using vehiculos_api.DTOs;
 using vehiculos_api.Model;
@@ -30,9 +31,12 @@ namespace vehiculos_api.Controller
                 Email = dto.Email
             };
 
+            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
+                return Conflict(new { message = "El email ingresado ya se encuentra en uso." });
+
             newUser.PasswordHash = _usersService.HashPassword(newUser, dto.Password);
 
-            _context.Users.Add(newUser);
+            await _context.Users.AddAsync(newUser);
             await _context.SaveChangesAsync();
 
             var response = new
@@ -48,7 +52,7 @@ namespace vehiculos_api.Controller
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == dto.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
             if(user == null)
             {
