@@ -12,3 +12,12 @@ Accept: application/json
 }
 
 ###
+
+POST {{vehiculos_api_HostAddress}}/api/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "tomas.emart@gmail.com",
+  "password": "123456"
+}

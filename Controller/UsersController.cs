@@ -45,6 +45,22 @@ namespace vehiculos_api.Controller
 
         }
 
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] LoginDto dto)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Email == dto.Email);
 
+            if(user == null)
+            {
+                return Unauthorized(new { message = "Usuario o contraseña incorrectos. " });
+            }
+
+            var success = _usersService.VerifyPassword(user, user.PasswordHash, dto.Password);
+
+            if (success) return Ok(new { message = "Sesión iniciada con éxito." });
+
+            return Unauthorized(new { message = "Usuario o contraseña incorrectos. " });
+        }
     }
+
 }
