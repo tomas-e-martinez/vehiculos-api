@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using vehiculos_api.Data;
 using vehiculos_api.Model;
+using vehiculos_api.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -17,6 +20,8 @@ builder.Services.AddDbContext<VehicleContext>(options =>
         ServerVersion.AutoDetect(connectionString)
     );
 });
+
+builder.Services.AddTransient<UsersService>();
 
 var app = builder.Build();
 
@@ -63,5 +68,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
