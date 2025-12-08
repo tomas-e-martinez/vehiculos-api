@@ -7,6 +7,6 @@
         public User User { get; set; }
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }
-        public ICollection<MaintenanceTask> MaintenanceTasks { get; set; }
+        public ICollection<MaintenanceTask> MaintenanceTasks { get; set; } = [];
     }
 }
