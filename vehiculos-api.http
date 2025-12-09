@@ -30,3 +30,19 @@ Accept: application/json
 GET {{vehiculos_api_HostAddress}}/api/users
 Accept: application/json
 Authorization: Bearer {{jwt}}
+
+
+###
+
+POST {{vehiculos_api_HostAddress}}/api/vehicles
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "year": 2006,
+  "kilometers": 199500,
+  "vehicleTypeId": 1
+}
