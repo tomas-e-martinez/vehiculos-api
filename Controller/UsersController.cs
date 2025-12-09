@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using vehiculos_api.Data;
@@ -42,8 +43,7 @@ namespace vehiculos_api.Controller
 
             var response = new
             {
-                message = "Usuario creado con éxito.",
-                user = newUser
+                message = "Usuario creado con éxito."
             };
 
             return StatusCode(201, response);
@@ -72,6 +72,26 @@ namespace vehiculos_api.Controller
 
             return Unauthorized(new { message = "Usuario o contraseña incorrectos. " });
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpGet]
+        public async Task<ActionResult> GetUsers()
+        {
+            var users = await _context.Users
+                .Include(u => u.Role)
+                .Select(u => new
+                {
+                    u.Id,
+                    u.FirstName,
+                    u.LastName,
+                    u.Email,
+                    u.Role
+                })
+                .ToListAsync();
+
+            return Ok(users);
+        }
+
     }
 
 }
