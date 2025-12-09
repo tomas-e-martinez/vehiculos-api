@@ -8,7 +8,8 @@ Accept: application/json
   "firstName": "Tomás",
   "lastName": "Martínez",
   "email": "tomas.emart@gmail.com",
-  "password": "123456"
+  "password": "123456",
+  "roleId": 1
 }
 
 ###

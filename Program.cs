@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using vehiculos_api.Data;
 using vehiculos_api.Model;
 using vehiculos_api.Service;
@@ -10,6 +12,25 @@ builder.Services.AddControllers();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddAuthentication("JwtBearer")
+    .AddJwtBearer("JwtBearer", options =>
+    {
+        var config = builder.Configuration.GetSection("Jwt");
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = config["Issuer"],
+            ValidAudience = config["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(config["Key"]))
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 builder.Services.AddDbContext<VehicleContext>(options =>
 {
@@ -29,6 +50,17 @@ using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<VehicleContext>();
     db.Database.Migrate();
+
+    if(!db.Roles.Any())
+    {
+        Console.WriteLine("Roles sin registros, aplicando seed...");
+
+        db.Roles.AddRange(
+            new Role { Name = "Admin" },
+            new Role { Name = "User" }
+        );
+        db.SaveChanges();
+    }
 
     if(!db.VehicleTypes.Any())
     {
@@ -68,6 +100,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

@@ -28,7 +28,8 @@ namespace vehiculos_api.Controller
             {
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
-                Email = dto.Email
+                Email = dto.Email,
+                RoleId = dto.RoleId
             };
 
             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
@@ -52,7 +53,9 @@ namespace vehiculos_api.Controller
         [HttpPost("login")]
         public async Task<ActionResult> Login([FromBody] LoginDto dto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+            var user = await _context.Users
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Email == dto.Email);
 
             if(user == null)
             {
@@ -61,7 +64,11 @@ namespace vehiculos_api.Controller
 
             var success = _usersService.VerifyPassword(user, user.PasswordHash, dto.Password);
 
-            if (success) return Ok(new { message = "Sesión iniciada con éxito." });
+            if (success)
+            {
+                var token = _usersService.GenerateJwt(user);
+                return Ok(new { message = "Sesión iniciada con éxito.", token });
+            }
 
             return Unauthorized(new { message = "Usuario o contraseña incorrectos. " });
         }
