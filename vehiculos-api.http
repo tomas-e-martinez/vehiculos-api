@@ -19,13 +19,13 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "candela@gmail.com",
+  "email": "tomas.emart@gmail.com",
   "password": "123456"
 }
 
 ###
 
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NTI2ODQyNiwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.zHAMeppHgPITVEXIDSHZfxX39BU1HS5y6X_5OM3gir8
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NTMzNzk5MCwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.qmP4FgQCg7hTJjyGGMfLkfKVq2Z27potXPxPcQf8mic
 
 GET {{vehiculos_api_HostAddress}}/api/users
 Accept: application/json
@@ -46,3 +46,11 @@ Authorization: Bearer {{jwt}}
   "kilometers": 199500,
   "vehicleTypeId": 1
 }
+
+###
+
+GET {{vehiculos_api_HostAddress}}/api/vehicles
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+###
