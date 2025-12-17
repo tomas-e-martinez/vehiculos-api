@@ -46,6 +46,11 @@ builder.Services.AddTransient<UsersService>();
 
 var app = builder.Build();
 
+app.MapGet("/health", () =>
+{
+    return Results.Ok(new { health = "healthy", timestamp = DateTime.UtcNow });
+});
+
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<VehicleContext>();
