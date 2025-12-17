@@ -37,5 +37,5 @@ jobs:
           docker run -d \
             --name vehiculos-api \
             -p 8081:8080 \
-            -e DB_CONNECTION=${{ secrets.DB_CONNECTION }} \
+            -e DB_CONNECTION="${{ secrets.DB_CONNECTION }}" \
             ghcr.io/${{ github.repository }}/vehiculos-api:latest
