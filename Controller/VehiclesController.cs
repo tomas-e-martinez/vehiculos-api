@@ -35,8 +35,7 @@ namespace vehiculos_api.Controller
                     v.Model,
                     v.Year,
                     v.Kilometers,
-                    v.VehicleType.Name,
-                    v.MaintenanceTasks
+                    VehicleType = v.VehicleType.Name,
                 })
                 .ToListAsync();
 
