@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Security.Claims;
 using vehiculos_api.Data;
 using vehiculos_api.DTOs;
@@ -17,6 +18,29 @@ namespace vehiculos_api.Controller
         public VehiclesController(VehicleContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult> GetUserVehicles()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var vehicles = await _context.Vehicles
+                .Where(v => v.UserId == userId)
+                .Select( v => new
+                {
+                    v.Id,
+                    v.Brand,
+                    v.Model,
+                    v.Year,
+                    v.Kilometers,
+                    v.VehicleType.Name,
+                    v.MaintenanceTasks
+                })
+                .ToListAsync();
+
+            return Ok(vehicles);
         }
 
         [Authorize]
@@ -79,6 +103,37 @@ namespace vehiculos_api.Controller
                 return StatusCode(500, new { error = "Error al crear vehículo.", detail = ex.Message });
             }
 
+        }
+
+        [Authorize]
+        [HttpPatch("{id}")]
+        public async Task<ActionResult> UpdateVehicle(int id, [FromBody] UpdateVehicleDto dto)
+        {
+            try
+            {
+                var vehicle = await _context.Vehicles.FindAsync(id);
+                if (vehicle == null)
+                {
+                    return NotFound(new { error = "Vehículo no encontrado." });
+                }
+
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (vehicle.UserId != userId)
+                {
+                    return StatusCode(403, new { error = "El vehículo no pertenece al usuario autenticado." });
+                }
+
+                _context.Entry(vehicle).CurrentValues.SetValues(dto);
+
+                var result = await _context.SaveChangesAsync();
+
+
+                return StatusCode(200, new { message = "Vehículo modificado con éxito." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al modificar vehículo.", detail = ex.Message });
+            }
         }
     }
 }
