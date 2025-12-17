@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using System.Security.Claims;
 using vehiculos_api.Data;
 using vehiculos_api.DTOs;
@@ -17,6 +18,29 @@ namespace vehiculos_api.Controller
         public VehiclesController(VehicleContext context)
         {
             _context = context;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult> GetUserVehicles()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            var vehicles = await _context.Vehicles
+                .Where(v => v.UserId == userId)
+                .Select( v => new
+                {
+                    v.Id,
+                    v.Brand,
+                    v.Model,
+                    v.Year,
+                    v.Kilometers,
+                    v.VehicleType.Name,
+                    v.MaintenanceTasks
+                })
+                .ToListAsync();
+
+            return Ok(vehicles);
         }
 
         [Authorize]
