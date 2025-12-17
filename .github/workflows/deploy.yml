@@ -18,11 +18,11 @@ jobs:
 
     - name: Build image
       run: |
-        docker build -t ghcr.io/${{ github.repository }}/vehiculos-api:latest .
+        docker build -t ghcr.io/${{ github.repository }}:latest .
 
     - name: Push image to GHCR
       run: |
-        docker push ghcr.io/${{ github.repository }}/vehiculos-api:latest
+        docker push ghcr.io/${{ github.repository }}:latest
 
     - name: Deploy to VPS
       uses: appleboy/ssh-action@v1
@@ -31,11 +31,11 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         script: |
-          docker pull ghcr.io/${{ github.repository }}/vehiculos-api:latest
+          docker pull ghcr.io/${{ github.repository }}:latest
           docker stop vehiculos-api || true
           docker rm vehiculos-api || true
           docker run -d \
             --name vehiculos-api \
             -p 8081:8080 \
             -e DB_CONNECTION="${{ secrets.DB_CONNECTION }}" \
-            ghcr.io/${{ github.repository }}/vehiculos-api:latest
+            ghcr.io/${{ github.repository }}:latest
