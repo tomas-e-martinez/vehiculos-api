@@ -1,0 +1,40 @@
+@vehiculos_api_HostAddress = http://localhost:5125
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NjA0NDU5NywiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.BgVtVE-qWs8ojpJwq66y6HOqk3JblfysR3jEUcc_gxA
+
+POST {{vehiculos_api_HostAddress}}/vehicles
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "brand": "Volkswagen",
+  "model": "Golf",
+  "year": 2006,
+  "kilometers": 199500,
+  "vehicleTypeId": 1
+}
+
+###
+
+GET {{vehiculos_api_HostAddress}}/vehicles
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+###
+
+PATCH {{vehiculos_api_HostAddress}}/vehicles/4
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "brand": "Ferrari",
+  "model": "F45",
+  "year": 1990
+}
+
+###
+
+GET {{vehiculos_api_HostAddress}}/vehicles/4/maintenance
+Accept: application/json
+Authorization: Bearer {{jwt}}

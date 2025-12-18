@@ -9,7 +9,7 @@ using vehiculos_api.Service;
 
 namespace vehiculos_api.Controller
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -79,15 +79,13 @@ namespace vehiculos_api.Controller
         {
             var users = await _context.Users
                 .Include(u => u.Role)
-                .Include(u => u.Vehicles)
                 .Select(u => new
                 {
                     u.Id,
                     u.FirstName,
                     u.LastName,
                     u.Email,
-                    u.Role,
-                    u.Vehicles
+                    Role = u.Role.Name
                 })
                 .ToListAsync();
 
