@@ -13,5 +13,6 @@ namespace vehiculos_api.Data
         public DbSet<MaintenanceType> MaintenanceTypes { get; set; }
         public DbSet<MaintenanceTask> MaintenanceTasks { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<VehicleKmsDate> VehicleKmsDates { get; set; }
     }
 }
