@@ -1,7 +1,7 @@
 @vehiculos_api_HostAddress = http://localhost:5125
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NjAxMTk4NiwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.Rt5uxp3TrYfGXKpTKk_CBEo9iKrtDSA3Ly7z17pdycA
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NjA0NDU5NywiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.BgVtVE-qWs8ojpJwq66y6HOqk3JblfysR3jEUcc_gxA
 
-POST {{vehiculos_api_HostAddress}}/api/users/signup
+POST {{vehiculos_api_HostAddress}}/users/signup
 Content-Type: application/json
 Accept: application/json
 
@@ -15,7 +15,7 @@ Accept: application/json
 
 ###
 
-POST {{vehiculos_api_HostAddress}}/api/users/login
+POST {{vehiculos_api_HostAddress}}/users/login
 Content-Type: application/json
 Accept: application/json
 
@@ -26,6 +26,6 @@ Accept: application/json
 
 ###
 
-GET {{vehiculos_api_HostAddress}}/api/users
+GET {{vehiculos_api_HostAddress}}/users
 Accept: application/json
 Authorization: Bearer {{jwt}}

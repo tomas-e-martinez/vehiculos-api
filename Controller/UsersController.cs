@@ -9,7 +9,7 @@ using vehiculos_api.Service;
 
 namespace vehiculos_api.Controller
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
     {

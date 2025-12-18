@@ -10,7 +10,7 @@ using vehiculos_api.Model;
 
 namespace vehiculos_api.Controller
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class VehiclesController : ControllerBase
     {
@@ -132,6 +132,34 @@ namespace vehiculos_api.Controller
             catch (Exception ex)
             {
                 return StatusCode(500, new { error = "Error al modificar vehículo.", detail = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("{id}/maintenance")]
+        public async Task<ActionResult> GetVehicleMaintenance(int id)
+        {
+            try
+            {
+                var maintenanceTasks = await _context.MaintenanceTasks
+                    .Where(mt => mt.VehicleId == id)
+                    .Select(mt => new
+                    {
+                        mt.Id,
+                        maintenanceType = mt.MaintenanceType.Name,
+                        mt.KmTarget,
+                        mt.DateTarget,
+                        mt.IsCompleted,
+                        mt.CompletedAt,
+                        mt.CompletedKm
+                    })
+                    .ToListAsync();
+
+                return Ok(maintenanceTasks);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al obtener el mantenimiento del vehículo.", detail = ex.Message });
             }
         }
     }
