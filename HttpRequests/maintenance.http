@@ -1,31 +1,11 @@
 @vehiculos_api_HostAddress = http://localhost:5125
 @jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hc0BnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NjEzNjQ2MCwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.geE69BFWw8ztPDAlnN8kjcn-YJDKHhUqyb_mqP0JMU0
 
-POST {{vehiculos_api_HostAddress}}/users/signup
+PATCH {{vehiculos_api_HostAddress}}/maintenance/1/complete
 Content-Type: application/json
-Accept: application/json
-
-{
-  "firstName": "Tomás",
-  "lastName": "Martínez",
-  "email": "tomas@gmail.com",
-  "password": "123456",
-  "roleId": 1
-}
-
-###
-
-POST {{vehiculos_api_HostAddress}}/users/login
-Content-Type: application/json
-Accept: application/json
-
-{
-  "email": "tomas@gmail.com",
-  "password": "123456"
-}
-
-###
-
-GET {{vehiculos_api_HostAddress}}/users
 Accept: application/json
 Authorization: Bearer {{jwt}}
+
+{
+  "kilometers": 71000
+}
