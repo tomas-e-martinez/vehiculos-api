@@ -86,6 +86,13 @@ namespace vehiculos_api.Controller
                     }
                 }
 
+                _context.VehicleKmsDates.Add(new VehicleKmsDate
+                {
+                    VehicleId = vehicle.Id,
+                    Date = DateTime.UtcNow,
+                    Kilometers = vehicle.Kilometers
+                });
+
                 await _context.SaveChangesAsync();
 
                 await transaction.CommitAsync();

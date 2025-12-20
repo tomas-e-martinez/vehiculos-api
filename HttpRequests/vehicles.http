@@ -1,5 +1,5 @@
 @vehiculos_api_HostAddress = http://localhost:5125
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hc0BnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NjEzNjQ2MCwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.geE69BFWw8ztPDAlnN8kjcn-YJDKHhUqyb_mqP0JMU0
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hc0BnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2NjI4NTExNiwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.CMK0KLv6LXwwwVrw4sWHOo7P3svDiNlnRp0huJ0FSIY
 
 POST {{vehiculos_api_HostAddress}}/vehicles
 Content-Type: application/json
@@ -7,10 +7,10 @@ Accept: application/json
 Authorization: Bearer {{jwt}}
 
 {
-  "brand": "Ferrari",
-  "model": "F40",
-  "year": 1994,
-  "kilometers": 60200,
+  "brand": "Porsche",
+  "model": "911",
+  "year": 1986,
+  "kilometers": 45200,
   "vehicleTypeId": 1
 }
 
