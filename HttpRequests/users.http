@@ -8,7 +8,7 @@ Accept: application/json
 {
   "firstName": "Tomás",
   "lastName": "Martínez",
-  "email": "tomas@gmail.com",
+  "email": "tomas.emart@gmail.com",
   "password": "123456",
   "roleId": 1
 }
@@ -20,7 +20,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "email": "tomas@gmail.com",
+  "email": "tomas.emart@gmail.com",
   "password": "123456"
 }
 

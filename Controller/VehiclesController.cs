@@ -169,5 +169,45 @@ namespace vehiculos_api.Controller
                 return StatusCode(500, new { error = "Error al obtener el mantenimiento del vehículo.", detail = ex.Message });
             }
         }
+
+        [Authorize]
+        [HttpGet("{id}/km-logs")]
+        public async Task<ActionResult> GetVehicleKmLogs(int id)
+        {
+            try
+            {
+                var vehicle = await _context.Vehicles
+                    .Where(v => v.Id == id)
+                    .Select( v => new
+                    {
+                        v.UserId,
+                        KmLogs = v.VehicleKmsDates
+                            .OrderByDescending(k => k.Date)
+                            .Select(k => new
+                            {
+                                k.Id,
+                                k.Date,
+                                k.Kilometers
+                            })
+                            .ToList()
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (vehicle == null)
+                    return NotFound(new { message = "Vehículo no encontrado." });
+
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (vehicle.UserId != userId)
+                {
+                    return StatusCode(403, new { error = "El vehículo no pertenece al usuario autenticado." });
+                }
+
+                return Ok(vehicle.KmLogs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al obtener los logs de kilometraje del vehículo.", detail = ex.Message });
+            }
+        }
     }
 }
