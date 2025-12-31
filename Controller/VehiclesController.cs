@@ -171,7 +171,7 @@ namespace vehiculos_api.Controller
         }
 
         [Authorize]
-        [HttpGet("{id}/km-logs")]
+        [HttpGet("{id}/kilometers")]
         public async Task<ActionResult> GetVehicleKmLogs(int id)
         {
             try
@@ -207,6 +207,46 @@ namespace vehiculos_api.Controller
             catch (Exception ex)
             {
                 return StatusCode(500, new { error = "Error al obtener los logs de kilometraje del vehículo.", detail = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPatch("{id}/kilometers")]
+        public async Task<ActionResult> UpdateKilometers(int id, [FromBody] UpdateKmsDto dto)
+        {
+            try
+            {
+                var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+
+                if (vehicle == null)
+                    return NotFound(new { message = "Vehículo no encontrado." });
+
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (vehicle.UserId != userId)
+                {
+                    return StatusCode(403, new { error = "El vehículo no pertenece al usuario autenticado." });
+                }
+
+                if (dto.Kilometers <= vehicle.Kilometers)
+                    return Conflict(new { message = "No puede restar kilómetros al vehículo. " });
+
+                vehicle.Kilometers = dto.Kilometers;
+
+                VehicleKmsDate kmsLog = new VehicleKmsDate
+                {
+                    VehicleId = vehicle.Id,
+                    Date = DateTime.UtcNow,
+                    Kilometers = vehicle.Kilometers
+                };
+
+                _context.VehicleKmsDates.Add(kmsLog);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Kilometraje del vehículo actualizado correctamente."});
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al actualizar los kilómetros del vehículo.", detail = ex.Message });
             }
         }
     }
