@@ -53,3 +53,8 @@ Content-Type: application/json
 {
   "kilometers": 73000
 }
+
+###
+DELETE {{vehiculos_api_HostAddress}}/vehicles/4
+Accept: application/json
+Authorization: Bearer {{jwt}}

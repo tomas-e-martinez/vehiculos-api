@@ -13,5 +13,6 @@
         public VehicleType VehicleType { get; set; }
         public ICollection<MaintenanceTask> MaintenanceTasks { get; set; } = [];
         public ICollection<VehicleKmsDate> VehicleKmsDates { get; set; }
+        public bool IsActive { get; set; } = true;
     }
 }
