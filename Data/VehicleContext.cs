@@ -14,5 +14,15 @@ namespace vehiculos_api.Data
         public DbSet<MaintenanceTask> MaintenanceTasks { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<VehicleKmsDate> VehicleKmsDates { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Vehicle>()
+                .Property(v => v.IsActive)
+                .HasDefaultValue(true);
+        }
+
     }
 }

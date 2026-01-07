@@ -166,7 +166,9 @@ namespace vehiculos_api.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
                     b.Property<int>("Kilometers")
                         .HasColumnType("int");

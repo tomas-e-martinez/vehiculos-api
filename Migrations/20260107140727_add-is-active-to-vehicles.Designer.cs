@@ -12,8 +12,8 @@ using vehiculos_api.Data;
 namespace vehiculos_api.Migrations
 {
     [DbContext(typeof(VehicleContext))]
-    [Migration("20260107132139_add-vehicle-active-field")]
-    partial class addvehicleactivefield
+    [Migration("20260107140727_add-is-active-to-vehicles")]
+    partial class addisactivetovehicles
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,7 +169,9 @@ namespace vehiculos_api.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
                     b.Property<int>("Kilometers")
                         .HasColumnType("int");

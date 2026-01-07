@@ -5,7 +5,7 @@
 namespace vehiculos_api.Migrations
 {
     /// <inheritdoc />
-    public partial class addvehicleactivefield : Migration
+    public partial class addisactivetovehicles : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,7 @@ namespace vehiculos_api.Migrations
                 table: "Vehicles",
                 type: "tinyint(1)",
                 nullable: false,
-                defaultValue: false);
+                defaultValue: true);
         }
 
         /// <inheritdoc />
