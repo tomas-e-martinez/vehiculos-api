@@ -27,7 +27,7 @@ namespace vehiculos_api.Controller
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
 
             var vehicles = await _context.Vehicles
-                .Where(v => v.UserId == userId)
+                .Where(v => v.UserId == userId && v.IsActive)
                 .Select( v => new
                 {
                     v.Id,
@@ -117,7 +117,9 @@ namespace vehiculos_api.Controller
         {
             try
             {
-                var vehicle = await _context.Vehicles.FindAsync(id);
+                var vehicle = await _context.Vehicles
+                    .FirstOrDefaultAsync(v => v.Id == id && v.IsActive);
+
                 if (vehicle == null)
                 {
                     return NotFound(new { error = "Vehículo no encontrado." });
@@ -148,21 +150,27 @@ namespace vehiculos_api.Controller
         {
             try
             {
-                var maintenanceTasks = await _context.MaintenanceTasks
-                    .Where(mt => mt.VehicleId == id)
-                    .Select(mt => new
+                var vehicle = await _context.Vehicles
+                    .Where(v => v.Id == id && v.IsActive)
+                    .Select(v => new
                     {
-                        mt.Id,
-                        maintenanceType = mt.MaintenanceType.Name,
-                        mt.KmTarget,
-                        mt.DateTarget,
-                        mt.IsCompleted,
-                        mt.CompletedAt,
-                        mt.CompletedKm
+                        MaintenanceTasks = v.MaintenanceTasks.Select(mt => new
+                        {
+                            mt.Id,
+                            maintenanceType = mt.MaintenanceType.Name,
+                            mt.KmTarget,
+                            mt.DateTarget,
+                            mt.IsCompleted,
+                            mt.CompletedAt,
+                            mt.CompletedKm
+                        })
                     })
-                    .ToListAsync();
+                    .FirstOrDefaultAsync();
 
-                return Ok(maintenanceTasks);
+                if (vehicle == null)
+                    return NotFound("No se encontró el vehículo.");
+
+                return Ok(vehicle.MaintenanceTasks);
             }
             catch (Exception ex)
             {
@@ -177,7 +185,7 @@ namespace vehiculos_api.Controller
             try
             {
                 var vehicle = await _context.Vehicles
-                    .Where(v => v.Id == id)
+                    .Where(v => v.Id == id && v.IsActive)
                     .Select( v => new
                     {
                         v.UserId,
@@ -216,7 +224,8 @@ namespace vehiculos_api.Controller
         {
             try
             {
-                var vehicle = await _context.Vehicles.FirstOrDefaultAsync(v => v.Id == id);
+                var vehicle = await _context.Vehicles
+                    .FirstOrDefaultAsync(v => v.Id == id && v.IsActive);
 
                 if (vehicle == null)
                     return NotFound(new { message = "Vehículo no encontrado." });
