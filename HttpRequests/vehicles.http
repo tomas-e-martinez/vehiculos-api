@@ -22,6 +22,12 @@ Authorization: Bearer {{jwt}}
 
 ###
 
+GET {{vehiculos_api_HostAddress}}/vehicles/5
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+###
+
 PATCH {{vehiculos_api_HostAddress}}/vehicles/4
 Content-Type: application/json
 Accept: application/json
