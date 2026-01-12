@@ -43,6 +43,53 @@ namespace vehiculos_api.Controller
         }
 
         [Authorize]
+        [HttpGet("{id}")]
+        public async Task<ActionResult> GetVehicle(int id)
+        {
+            try
+            {
+                var vehicle = await _context.Vehicles
+                    .Where(v => v.Id == id && v.IsActive)
+                    .Select(v => new
+                    {
+                        v.Id,
+                        v.Brand,
+                        v.Model,
+                        v.Year,
+                        v.Kilometers,
+                        VehicleType = v.VehicleType.Name,
+                        v.UserId
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (vehicle == null)
+                {
+                    return NotFound(new { error = "Vehículo no encontrado." });
+                }
+
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (vehicle.UserId != userId)
+                {
+                    return StatusCode(403, new { error = "El vehículo no pertenece al usuario autenticado." });
+                }
+
+                return Ok(new
+                {
+                    vehicle.Id,
+                    vehicle.Brand,
+                    vehicle.Model,
+                    vehicle.Year,
+                    vehicle.Kilometers,
+                    vehicle.VehicleType
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al obtener el vehículo.", detail = ex.Message });
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> CreateVehicle([FromBody] CreateVehicleDto dto)
         {
