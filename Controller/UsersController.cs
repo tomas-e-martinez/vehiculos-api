@@ -30,7 +30,7 @@ namespace vehiculos_api.Controller
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
-                RoleId = dto.RoleId
+                RoleId = 2
             };
 
             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
@@ -43,7 +43,8 @@ namespace vehiculos_api.Controller
 
             var response = new
             {
-                message = "Usuario creado con éxito."
+                message = "Usuario creado con éxito.",
+                token = _usersService.GenerateJwt(newUser, "User")
             };
 
             return StatusCode(201, response);
@@ -66,7 +67,7 @@ namespace vehiculos_api.Controller
 
             if (success)
             {
-                var token = _usersService.GenerateJwt(user);
+                var token = _usersService.GenerateJwt(user, user.Role.Name);
                 return Ok(new { message = "Sesión iniciada con éxito.", token });
             }
 

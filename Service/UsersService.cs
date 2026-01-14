@@ -28,7 +28,7 @@ namespace vehiculos_api.Service
             return result == PasswordVerificationResult.Success;
         }
 
-        public string GenerateJwt(User user)
+        public string GenerateJwt(User user, string role)
         {
             var config = _config.GetSection("Jwt");
 
@@ -39,7 +39,7 @@ namespace vehiculos_api.Service
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, user.Role.Name)
+                new Claim(ClaimTypes.Role, role)
             };
 
             var token = new JwtSecurityToken(
