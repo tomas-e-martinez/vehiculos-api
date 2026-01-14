@@ -44,6 +44,21 @@ builder.Services.AddDbContext<VehicleContext>(options =>
 
 builder.Services.AddTransient<UsersService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy
+            .WithOrigins(
+                "http://localhost:5173", // Vite
+                "https://vehiculos.tomasmartinez.com.ar"
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 app.MapGet("/health", () =>
@@ -105,6 +120,8 @@ if (app.Environment.IsDevelopment())
 }
 
 //app.UseHttpsRedirection();
+
+app.UseCors("FrontendPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
