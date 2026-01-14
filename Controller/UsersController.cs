@@ -30,7 +30,7 @@ namespace vehiculos_api.Controller
                 FirstName = dto.FirstName,
                 LastName = dto.LastName,
                 Email = dto.Email,
-                RoleId = dto.RoleId
+                RoleId = 2
             };
 
             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
