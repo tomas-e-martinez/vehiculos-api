@@ -50,7 +50,8 @@ builder.Services.AddCors(options =>
     {
         policy
             .WithOrigins(
-                "http://localhost:5173" // Vite
+                "http://localhost:5173", // Vite
+                "https://vehiculos.tomasmartinez.com.ar"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
