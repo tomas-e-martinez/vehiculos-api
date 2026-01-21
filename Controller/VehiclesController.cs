@@ -204,6 +204,47 @@ namespace vehiculos_api.Controller
         }
 
         [Authorize]
+        [HttpPost("{vehicleId}/maintenance")]
+        public async Task<ActionResult> CreateMaintenanceTask(int vehicleId, [FromBody] CreateMaintenanceDto dto)
+        {
+            try
+            {
+                var vehicle = await _context.Vehicles
+                    .Where(v => v.Id == vehicleId)
+                    .FirstOrDefaultAsync();
+
+                if (vehicle == null || !vehicle.IsActive)
+                    return NotFound("No se encontró el vehículo.");
+
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (vehicle.UserId != userId)
+                    return StatusCode(403, new { error = "El vehículo no pertenece al usuario autenticado." });
+
+                var newTask = new MaintenanceTask
+                {
+                    VehicleId = vehicleId,
+                    MaintenanceTypeId = dto.MaintenanceTypeId.Value,
+                    KmTarget = dto.KmTarget,
+                    DateTarget = dto.DateTarget,
+                    IsCompleted = false
+                };
+
+                _context.MaintenanceTasks.Add(newTask);
+                await _context.SaveChangesAsync();
+
+                return StatusCode(201, new
+                {
+                    message = "Mantenimiento creado con éxito.",
+                    maintenanceId = newTask.Id
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al crear el mantenimiento.", detail = ex.Message });
+            }
+        }
+
+        [Authorize]
         [HttpGet("{id}/kilometers")]
         public async Task<ActionResult> GetVehicleKmLogs(int id)
         {

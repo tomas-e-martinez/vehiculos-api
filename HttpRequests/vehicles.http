@@ -1,5 +1,5 @@
 @vehiculos_api_HostAddress = http://localhost:5125
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2ODMyMzE2MSwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.CF7QfDUIoqC21zxF_VtYv-tfpqz9mIwRWrRqjCPSM9A
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2OTAxNzQ4NCwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.Tt5wxeInxEZUwxYPXoHokOoPvPn4WebYSUy_cmvbOko
 
 POST {{vehiculos_api_HostAddress}}/vehicles
 Content-Type: application/json
@@ -44,6 +44,18 @@ Authorization: Bearer {{jwt}}
 GET {{vehiculos_api_HostAddress}}/vehicles/5/maintenance
 Accept: application/json
 Authorization: Bearer {{jwt}}
+
+###
+POST {{vehiculos_api_HostAddress}}/vehicles/5/maintenance
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "maintenanceTypeId": 1,
+  "dateTarget": "2026-01-22T00:00:00-03:00",
+  "kmTarget": 100000
+}
 
 ###
 GET {{vehiculos_api_HostAddress}}/vehicles/5/kilometers
