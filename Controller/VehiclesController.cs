@@ -111,28 +111,6 @@ namespace vehiculos_api.Controller
                 _context.Vehicles.Add(vehicle);
                 await _context.SaveChangesAsync();
 
-                var maintenanceTypes = await _context.MaintenanceTypes
-                    .Where(mt => mt.VehicleTypes.Any(v => v.Id == dto.VehicleTypeId))
-                    .ToListAsync();
-
-                if(maintenanceTypes.Count > 0)
-                {
-                    foreach (var maintenanceType in maintenanceTypes)
-                    {
-                        var maintenanceTask = new MaintenanceTask
-                        {
-                            VehicleId = vehicle.Id,
-                            MaintenanceTypeId = maintenanceType.Id,
-                            KmTarget = null,
-                            DateTarget = null,
-                            IsCompleted = false,
-                            CompletedAt = null,
-                            CompletedKm = null
-                        };
-                        _context.Add(maintenanceTask);
-                    }
-                }
-
                 _context.VehicleKmsDates.Add(new VehicleKmsDate
                 {
                     VehicleId = vehicle.Id,

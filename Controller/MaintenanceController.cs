@@ -46,20 +46,6 @@ namespace vehiculos_api.Controller
                 maintenanceTask.CompletedAt = dto.CompletedAt ?? DateTime.UtcNow;
                 maintenanceTask.IsCompleted = true;
 
-                //CREAR SIGUIENTE MANTENIMIENTO
-                var maintenanceType = maintenanceTask.MaintenanceType;
-                var newMaintenance = new MaintenanceTask
-                {
-                    VehicleId = maintenanceTask.VehicleId,
-                    MaintenanceTypeId = maintenanceTask.MaintenanceTypeId,
-                    KmTarget = maintenanceTask.CompletedKm + maintenanceType.DefaultKmInterval,
-                    DateTarget = maintenanceTask.CompletedAt.Value.AddMonths(maintenanceType.DefaultMonthInterval),
-                    IsCompleted = false,
-                    CompletedAt = null,
-                    CompletedKm = null
-                };
-                _context.MaintenanceTasks.Add(newMaintenance);
-
                 //ACTUALIZAR KILOMETRAJE DEL VEHÍCULO SI CORRESPONDE
                 var vehicle = maintenanceTask.Vehicle;
                 if (dto.Kilometers > vehicle.Kilometers)
