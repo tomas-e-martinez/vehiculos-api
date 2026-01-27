@@ -36,5 +36,29 @@ namespace vehiculos_api.Controller
                 return StatusCode(500, new { error = "Error al obtener los tipos de vehículo.", detail = ex.Message });
             }
         }
+
+        [HttpGet("{id}/maintenance-types")]
+        public async Task<ActionResult> GetVehicleTypeMaintenanceTypes(int id)
+        {
+            try
+            {
+                var maintenanceTypes = await _context.MaintenanceTypes
+                    .Where(mt => mt.VehicleTypes.Any(vt => vt.Id == id))
+                    .Select(mt => new
+                    {
+                        mt.Id,
+                        mt.Name,
+                        mt.DefaultKmInterval,
+                        mt.DefaultMonthInterval
+                    })
+                    .ToListAsync();
+
+                return Ok(maintenanceTypes);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al obtener los tipos de mantenimiento.", detail = ex.Message });
+            }
+        }
     }
 }

@@ -4,3 +4,8 @@ GET {{vehiculos_api_HostAddress}}/vehicle-types
 Accept: application/json
 
 ###
+
+GET {{vehiculos_api_HostAddress}}/vehicle-types/1/maintenance-types
+Accept: application/json
+
+###
