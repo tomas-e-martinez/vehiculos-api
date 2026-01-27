@@ -1,0 +1,6 @@
+@vehiculos_api_HostAddress = http://localhost:5125
+
+GET {{vehiculos_api_HostAddress}}/maintenance-types
+Accept: application/json
+
+###
