@@ -1,6 +1,20 @@
 @vehiculos_api_HostAddress = http://localhost:5125
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJ0b21hcy5lbWFydEBnbWFpbC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc2OTgwNzA3MiwiaXNzIjoidmVoaWN1bG9zLWFwaSIsImF1ZCI6InZlaGljdWxvcy1hcGkifQ.AisebaiXr8A9Cj7JS2JZrECMFQsfcwC6t8o-JyrpVp4
 
 GET {{vehiculos_api_HostAddress}}/maintenance-types
 Accept: application/json
+
+###
+
+POST {{vehiculos_api_HostAddress}}/maintenance-types
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{jwt}}
+
+{
+  "name": "Test Mantenimiento",
+  "description": "Mantenimiento de pruebas",
+  "vehicleTypeIds": [1, 2]
+}
 
 ###
