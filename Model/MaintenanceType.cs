@@ -8,5 +8,6 @@
         public int DefaultKmInterval { get; set; }
         public int DefaultMonthInterval { get; set; }
         public ICollection<VehicleType> VehicleTypes { get; set; } = [];
+        public bool IsActive { get; set; }
     }
 }

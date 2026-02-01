@@ -81,5 +81,29 @@ namespace vehiculos_api.Controller
                 return StatusCode(500, new { error = "Error al crear el tipo de mantenimiento.", detail = ex.Message });
             }
         }
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> SoftDeleteMaintenanceType(int id)
+        {
+            try
+            {
+                var maintenanceType = await _context.MaintenanceTypes.Where(mt => mt.Id == id).FirstOrDefaultAsync();
+
+                if (maintenanceType == null || !maintenanceType.IsActive)
+                    return NotFound("No se encontró el tipo de mantenimiento a dar de baja.");
+
+                maintenanceType.IsActive = false;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Tipo de mantenimiento dado de baja correctamente. " });
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "Error al dar de baja el tipo de mantenimiento.", detail = ex.Message });
+            }
+        }
     }
 }

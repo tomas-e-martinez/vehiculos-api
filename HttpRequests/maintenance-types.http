@@ -18,3 +18,9 @@ Authorization: Bearer {{jwt}}
 }
 
 ###
+
+DELETE {{vehiculos_api_HostAddress}}/maintenance-types/1
+Accept: application/json
+Authorization: Bearer {{jwt}}
+
+###
