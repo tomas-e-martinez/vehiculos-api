@@ -91,7 +91,7 @@ namespace vehiculos_api.Controller
                 var maintenanceType = await _context.MaintenanceTypes.Where(mt => mt.Id == id).FirstOrDefaultAsync();
 
                 if (maintenanceType == null || !maintenanceType.IsActive)
-                    return NotFound("No se encontró el tipo de mantenimiento a dar de baja.");
+                    return NotFound(new { message = "No se encontró el tipo de mantenimiento a dar de baja." });
 
                 maintenanceType.IsActive = false;
 
