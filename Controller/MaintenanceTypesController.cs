@@ -67,7 +67,8 @@ namespace vehiculos_api.Controller
                     Description = dto.Description,
                     DefaultKmInterval = dto.DefaultKmInterval,
                     DefaultMonthInterval = dto.DefaultMonthInterval,
-                    VehicleTypes = vehicleTypes
+                    VehicleTypes = vehicleTypes,
+                    IsActive = true
                 };
 
                 _context.MaintenanceTypes.Add(newMaintenanceType);

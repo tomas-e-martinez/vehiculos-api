@@ -106,7 +106,8 @@ using (var scope = app.Services.CreateScope())
                 Description = "Cambio de aceite y filtro",
                 DefaultKmInterval = 10000,
                 DefaultMonthInterval = 12,
-                VehicleTypes = new List<VehicleType> { auto, moto }
+                VehicleTypes = new List<VehicleType> { auto, moto },
+                IsActive = true
             }
         );
         db.SaveChanges();
